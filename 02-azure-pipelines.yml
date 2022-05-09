@@ -16,6 +16,7 @@ stages:
         steps:
           - bash: echo Build
           - bash: echo $(PipelineLabelVariable)
+          - bash: echo $(Build.BuildNumber)
             displayName: 'Building'
   - stage: Dev
     variables:
