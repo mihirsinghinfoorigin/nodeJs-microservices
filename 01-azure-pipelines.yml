@@ -29,7 +29,7 @@ stages:
         - script: echo Hello, QA!
           displayName: 'Run a job 2 one-line script'
   - stage: Prod
-    dependsOn: Dev, QA
+    dependsOn: QA
     jobs:
     - job: job1
       steps:
