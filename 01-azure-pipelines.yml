@@ -22,12 +22,14 @@ stages:
             echo See https://aka.ms/yaml
           displayName: 'Run a job 1 multi-line script'
   - stage: QA
+    dependsOn: Dev
     jobs:
     - job: job1
       steps:
         - script: echo Hello, QA!
           displayName: 'Run a job 2 one-line script'
-  - stage: PROD
+  - stage: Prod
+    dependsOn: Dev, Prod
     jobs:
     - job: job1
       steps:
