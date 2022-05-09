@@ -15,7 +15,6 @@ stages:
       - job: copingfiles
         steps:
           - bash: ls -R $(Build.ArtifactStagingDirectory)
-          - bash: echo "Trigger Release"
           - task: CopyFiles@2
             inputs:
               SourceFolder: '$(System.DefaultWorkingDirectory)'
