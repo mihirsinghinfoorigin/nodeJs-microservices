@@ -6,17 +6,22 @@
 trigger:
 - main
 
-stages:
-  - 
 pool:
   vmImage: ubuntu-latest
 
-  jobs:
-    steps:
-    - script: echo Hello, Job1!
-      displayName: 'Run a one-line script'
+stages:
+  - stage: stage1
+    jobs:
+      - job: job1
+        steps:
+        - script: echo Hello, Job1!
+          displayName: 'Run a one-line script'
 
-    - script: |
-        echo Add other tasks to build, test, and deploy your project.
-        echo See https://aka.ms/yaml
-      displayName: 'Run a job 1 multi-line script'
+        - script: |
+            echo Add other tasks to build, test, and deploy your project.
+            echo See https://aka.ms/yaml
+          displayName: 'Run a job 1 multi-line script'
+      - job: job2
+        steps:
+          - script: echo Hello, Job2!
+            displayName: 'Run a job 2 one-line script'
