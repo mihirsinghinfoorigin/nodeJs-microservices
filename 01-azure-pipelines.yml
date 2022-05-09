@@ -6,6 +6,8 @@
 trigger:
 - main
 
+stages:
+  - 
 pool:
   vmImage: ubuntu-latest
 
