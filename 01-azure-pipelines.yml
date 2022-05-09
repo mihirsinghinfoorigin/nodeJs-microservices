@@ -10,7 +10,14 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
+  - stage: Build
+    jobs:
+      - job: job1
+        steps:
+          - bash: echo Build
+            displayName: 'Building'
   - stage: Dev
+    dependsOn: Build
     jobs:
       - job: job1
         steps:
@@ -22,7 +29,7 @@ stages:
             echo See https://aka.ms/yaml
           displayName: 'Run a job 1 multi-line script'
   - stage: QA
-    dependsOn: Dev
+    dependsOn: Build
     jobs:
     - job: job1
       steps:
@@ -30,7 +37,7 @@ stages:
           displayName: 'Run a job 2 one-line script'
   - stage: Prod
     dependsOn:
-     - Dev
+     - Build
      - QA
     jobs:
     - job: job1
