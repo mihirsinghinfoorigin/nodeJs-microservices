@@ -17,7 +17,6 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
     backendType: 'azurerm'
     backendServiceArm: 'az-rm-sc'
-    backendAzureRmSubscriptionId: '5a9ae617-7b33-4bd4-b9f1-e86451893dc7'
     ensureBackend: true
     backendAzureRmResourceGroupName: 'terraform-backend-rg'
     backendAzureRmResourceGroupLocation: 'centralindia'
@@ -25,17 +24,10 @@ steps:
     backendAzureRmContainerName: 'storageaccmscontainer'
     backendAzureRmKey: 'kubernetes-dev.tfstate'
     allowTelemetryCollection: true
-#- task: TerraformCLI@0
-#  inputs:
-#    command: 'apply'
-#    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-#    environmentServiceName: 'az-rm-sc'
-#    runAzLogin: true
-#    commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publicKey.secureFilePath)'
-#    allowTelemetryCollection: true
 - task: TerraformCLI@0
   inputs:
-    command: 'destroy'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
     environmentServiceName: 'az-rm-sc'
-    providerAzureRmSubscriptionId: '5a9ae617-7b33-4bd4-b9f1-e86451893dc7'
+    commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publicKey.secureFilePath)'
     allowTelemetryCollection: true
