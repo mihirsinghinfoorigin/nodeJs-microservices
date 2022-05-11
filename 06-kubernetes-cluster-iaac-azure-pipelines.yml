@@ -33,3 +33,9 @@ steps:
     runAzLogin: true
     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publicKey.secureFilePath)'
     allowTelemetryCollection: true
+- task: TerraformCLI@0
+  inputs:
+    command: 'destroy'
+    environmentServiceName: 'az-rm-sc'
+    providerAzureRmSubscriptionId: '5a9ae617-7b33-4bd4-b9f1-e86451893dc7'
+    allowTelemetryCollection: true
