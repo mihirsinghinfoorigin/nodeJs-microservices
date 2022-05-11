@@ -3,7 +3,7 @@ terraform {
     storage_account_name = "storageaccmstfstate"
     container_name       = "storageaccmscontainer"
     key                  = "kubernetes-dev.tfstate"
-    access_key           = var.access_key
+    access_key           = "Wi+q1fQ0ut0ERw+OMGqKgrsJ7oyD2Qn7GdTGWrlZbr7WLWniPYRgU5k2Bpge3xMTJkJfNMVzEa26Dnd+pQpTzQ=="
   }
 }
 

@@ -1,7 +1,6 @@
 variable "client_id" {}
 variable "client_secret" {}
 variable "ssh_public_key" {}
-variable "access_key" {}
 
 variable "environment" {
   default = "dev"
