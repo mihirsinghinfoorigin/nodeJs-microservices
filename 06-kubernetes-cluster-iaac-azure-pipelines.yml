@@ -36,4 +36,5 @@ steps:
     command: 'destroy'
     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
     environmentServiceName: 'az-rm-sc'
+    secureVarsFile: 'secretKey'
     allowTelemetryCollection: true
