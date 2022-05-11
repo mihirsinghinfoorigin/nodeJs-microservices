@@ -23,5 +23,5 @@ variable cluster_name {
 }
 
 variable resource_group {
-    default = "AZURE-TRAINING-RG"
+    default = "k8stest_rg"
 }
