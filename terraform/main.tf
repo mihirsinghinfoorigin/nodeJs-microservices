@@ -1,5 +1,5 @@
 terraform {
-  backend "azure" {}
+  backend "azurerm" {}
 }
 
 resource "azurerm_resource_group" "resource_group" {
