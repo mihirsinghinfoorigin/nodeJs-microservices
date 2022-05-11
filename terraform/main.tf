@@ -1,5 +1,12 @@
 terraform {
-  backend "azurerm" {}
+  backend "azurerm" {
+    storage_account_name = "storageaccmstfstate"
+    container_name       = "storageaccmscontainer"
+    key                  = "kubernetes-dev.tfstate"
+    use_azuread_auth     = true
+    subscription_id      = var.subscription_id
+    tenant_id            = var.tenant_id
+  }
 }
 
 resource "azurerm_resource_group" "resource_group" {
