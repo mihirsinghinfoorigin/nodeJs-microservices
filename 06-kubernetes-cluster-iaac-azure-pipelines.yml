@@ -26,11 +26,6 @@ steps:
     allowTelemetryCollection: true
 - task: TerraformCLI@0
   inputs:
-    command: 'forceunlock'
-    allowTelemetryCollection: true
-    lockID: '41fb7e2a-99ab-1d0e-5842-994979944959'
-- task: TerraformCLI@0
-  inputs:
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
     environmentServiceName: 'az-rm-sc'
