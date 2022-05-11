@@ -1,9 +1,9 @@
 terraform {
   backend "azurerm" {
-    resource_group_name  = "terraform-backend-rg"
     storage_account_name = "storageaccmstfstate"
     container_name       = "storageaccmscontainer"
     key                  = "kubernetes-dev.tfstate"
+    access_key           = var.access_key
   }
 }
 
