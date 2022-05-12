@@ -54,7 +54,6 @@ stages:
         inputs:
           action: 'deploy'
           kubernetesServiceConnection: 'azure-kubernetes-connection'
-          namespace: 'default'
           manifests: '$(System.ArtifactsDirectory)/deployment.yaml'
           containers: 'msinfoorigin/nodejs-microservices-devops:$(tag)'
 # Stage 2
