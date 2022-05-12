@@ -53,7 +53,15 @@ stages:
     - job: Apply
       displayName: Apply kubernetes configuration
       steps:
-      - script: kubectl apply -f '$(System.ArtifactsDirectory)/deployment.yaml'
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'az-rm-sc'
+          scriptType: 'ps'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            az aks get-credentials --name k8stest_dev --resource-group k8stest_rg_dev
+            kubectl apply -f '$(System.ArtifactsDirectory)/deployment.yaml'
+
 #      - task: KubernetesManifest@0
 #        inputs:
 #          action: 'deploy'
