@@ -6,6 +6,7 @@ const distance = require('../service/distance');
 var controllers = {
     about: (req, res) => {
         var aboutInfo = {
+            author: 'Mihir Singh',
             name: properties.name,
             version: properties.version,
         }
