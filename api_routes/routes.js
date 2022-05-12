@@ -1,6 +1,6 @@
 'use strict';
 
-const controller = require('../controllers/controller').default;
+const controller = require('../controllers/controller');
 
 module.exports = (app) => {
 app.route('/about').get(controller.about);
