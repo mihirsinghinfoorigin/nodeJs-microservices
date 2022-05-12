@@ -50,12 +50,17 @@ stages:
           artifactName: 'manifests'
           itemPattern: '**/*.yaml'
           targetPath: '$(System.ArtifactsDirectory)'
-      - task: KubernetesManifest@0
-        inputs:
-          action: 'bake'
-          namespace: 'default'
-          containers: 'msinfoorigin/nodejs-microservices-devops:$(tag)'
-          helmChart: 'charts/sample'
+    - job: Apply
+      displayName: Apply kubernetes configuration
+      steps:
+      - script: kubectl apply -f '$(System.ArtifactsDirectory)/deployment.yaml'
+#      - task: KubernetesManifest@0
+#        inputs:
+#          action: 'deploy'
+#          kubernetesServiceConnection: 'azure-kubernetes-connection'
+#          namespace: 'default'
+#          manifests: '$(System.ArtifactsDirectory)/deployment.yaml'
+#          containers: 'msinfoorigin/nodejs-microservices-devops:$(tag)'
 # Stage 2
 # Download the K8S Files
 # Deploy to K8S Cluster with Docker Image
