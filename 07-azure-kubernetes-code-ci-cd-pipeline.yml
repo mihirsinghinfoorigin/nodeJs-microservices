@@ -52,11 +52,10 @@ stages:
           targetPath: '$(System.ArtifactsDirectory)'
       - task: KubernetesManifest@0
         inputs:
-          action: 'deploy'
-          kubernetesServiceConnection: 'azure-kubernetes-connection'
+          action: 'bake'
           namespace: 'default'
-          manifests: '$(System.ArtifactsDirectory)/deployment.yaml'
           containers: 'msinfoorigin/nodejs-microservices-devops:$(tag)'
+          helmChart: 'charts/sample'
 # Stage 2
 # Download the K8S Files
 # Deploy to K8S Cluster with Docker Image
