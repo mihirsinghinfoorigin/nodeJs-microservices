@@ -50,27 +50,13 @@ stages:
           artifactName: 'manifests'
           itemPattern: '**/*.yaml'
           targetPath: '$(System.ArtifactsDirectory)'
-    - job: Apply
-      displayName: Apply kubernetes configuration
-      steps:
-      - task: AzureCLI@2
+      - task: KubernetesManifest@0
         inputs:
-          azureSubscription: 'az-rm-sc'
-          scriptType: 'ps'
-          scriptLocation: 'inlineScript'
-          inlineScript: |
-            az aks get-credentials --name k8stest_dev --resource-group k8stest_rg_dev
-            kubectl apply -f '$(System.ArtifactsDirectory)/deployment.yaml'
-          addSpnToEnvironment: true
-          useGlobalConfig: true
-
-#      - task: KubernetesManifest@0
-#        inputs:
-#          action: 'deploy'
-#          kubernetesServiceConnection: 'azure-kubernetes-connection'
-#          namespace: 'default'
-#          manifests: '$(System.ArtifactsDirectory)/deployment.yaml'
-#          containers: 'msinfoorigin/nodejs-microservices-devops:$(tag)'
+          action: 'deploy'
+          kubernetesServiceConnection: 'azure-kubernetes-connection'
+          namespace: 'default'
+          manifests: '$(System.ArtifactsDirectory)/deployment.yaml'
+          containers: 'msinfoorigin/nodejs-microservices-devops:$(tag)'
 # Stage 2
 # Download the K8S Files
 # Deploy to K8S Cluster with Docker Image
