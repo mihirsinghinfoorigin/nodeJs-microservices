@@ -5,6 +5,10 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: DownloadSecureFile@1
+  name: publicKey
+  inputs:
+    secureFile: 'azure_rsa.pub'
 - task: TerraformCLI@0
   inputs:
     command: 'init'
