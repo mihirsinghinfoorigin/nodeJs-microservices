@@ -2,6 +2,7 @@ trigger:
 - main
 
 variables:
+  tag: $(Build.BuildId)
   vmImageName: 'ubuntu-latest'
 
 
