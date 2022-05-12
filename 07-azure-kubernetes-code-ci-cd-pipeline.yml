@@ -6,7 +6,6 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
-  vmImageName: "ubuntu-latest"
 
 # Stage 1
 # Build Docker Image
@@ -18,7 +17,7 @@ stages:
       - job: Build
         displayName: Build
         pool:
-          vmImage: $(vmImageName)
+          vmImage: "ubuntu-latest"
         steps:
         - task: Docker@2
           inputs:
@@ -40,38 +39,24 @@ stages:
   - stage: Deploy
     displayName: Deploy image
     jobs:
-    - deployment: Deploy
+    - job: Deploy
       displayName: Deploy
       pool:
-        vmImage: $(vmImageName)
-      environment: dev
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-            - task: DownloadPipelineArtifact@2
-              inputs:
-                artifactName: 'manifests'
-                downloadPath: '$(System.ArtifactsDirectory)/manifests'
-            - task: KubernetesManifest@0
-              displayName: Create imagePullSecret
-              inputs:
-                action: 'createSecret'
-                kubernetesServiceConnection: 'azure-kubernetes-connection'
-                namespace: 'default'
-                secretType: 'dockerRegistry'
-                secretName: 'imagePullSecret'
-                dockerRegistryEndpoint: 'nodejs-microservices-docker-hub'
-            - task: KubernetesManifest@0
-              inputs:
-                action: 'deploy'
-                kubernetesServiceConnection: 'azure-kubernetes-connection'
-                namespace: 'default'
-                manifests: |
-                  $(System.ArtifactsDirectory)/manifests/deployment.yml
-                containers: |
-                  msinfoorigin/nodejs-microservices-devops:$(tag)
-                imagePullSecrets: 'imagePullSecret'
+        vmImage: "ubuntu-latest"
+      steps:
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          buildType: 'current'
+          artifactName: 'manifests'
+          itemPattern: '**/*.yaml'
+          targetPath: '$(System.ArtifactsDirectory)'
+      - task: KubernetesManifest@0
+        inputs:
+          action: 'deploy'
+          kubernetesServiceConnection: 'azure-kubernetes-connection'
+          namespace: 'default'
+          manifests: '$(System.ArtifactsDirectory)/deployment.yaml'
+          containers: 'msinfoorigin/nodejs-microservices-devops:$(tag)'
 # Stage 2
 # Download the K8S Files
 # Deploy to K8S Cluster with Docker Image
