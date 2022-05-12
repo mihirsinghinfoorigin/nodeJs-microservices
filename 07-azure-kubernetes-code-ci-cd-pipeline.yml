@@ -29,9 +29,8 @@ stages:
             tags: '$(tag)'
         - task: PublishPipelineArtifact@1
           inputs:
-            targetPath: 'manifests'
-            artifact: 'manifests'
-            publishLocation: 'pipeline'
+            artifactName: 'manifests'
+            path: 'manifests'
 #        - task: CopyFiles@2
 #          inputs:
 #            SourceFolder: '$(System.DefaultWorkingDirectory)'
