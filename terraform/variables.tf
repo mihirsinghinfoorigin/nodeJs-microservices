@@ -29,3 +29,7 @@ variable "resource_group" {
 variable "api_key_vault" {
   default = "zipcodeApiKeyVault"
 }
+
+variable "api_key_vault_secret" {
+  default = "zipcodeApiKeyVaultSecret"
+}
