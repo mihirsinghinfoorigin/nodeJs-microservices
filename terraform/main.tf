@@ -35,14 +35,18 @@ resource "azurerm_key_vault" "api_key_vault" {
       "Get",
       "Create",
       "List",
-      "Delete"
+      "Delete",
+      "Recover",
+      "Purge"
     ]
 
     secret_permissions = [
       "Get",
       "Set",
       "List",
-      "Delete"
+      "Delete",
+      "Recover",
+      "Purge"
     ]
 
     storage_permissions = [
