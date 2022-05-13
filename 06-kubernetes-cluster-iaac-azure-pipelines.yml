@@ -21,9 +21,6 @@ stages:
           name: publicKey
           inputs:
             secureFile: 'azure_rsa.pub'
-        - task: DownloadSecureFile@1
-          inputs:
-            secureFile: '.env'
         - task: TerraformCLI@0
           inputs:
             command: 'init'
