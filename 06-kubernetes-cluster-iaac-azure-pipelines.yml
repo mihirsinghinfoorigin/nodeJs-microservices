@@ -41,49 +41,49 @@ stages:
             environmentServiceName: 'az-rm-sc'
             commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publicKey.secureFilePath)'
             allowTelemetryCollection: true
-        - task: TerraformCLI@0
+        # - task: TerraformCLI@0
+        #   inputs:
+        #     command: 'destroy'
+        #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+        #     environmentServiceName: 'az-rm-sc'
+        #     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publicKey.secureFilePath)'
+        #     allowTelemetryCollection: true
+  - stage: Build
+    displayName: Build image
+    jobs:
+      - job: Build
+        displayName: Build
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+        - task: Docker@2
           inputs:
-            command: 'destroy'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-            environmentServiceName: 'az-rm-sc'
-            commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publicKey.secureFilePath)'
-            allowTelemetryCollection: true
-  # - stage: Build
-  #   displayName: Build image
-  #   jobs:
-  #     - job: Build
-  #       displayName: Build
-  #       pool:
-  #         vmImage: $(vmImageName)
-  #       steps:
-  #       - task: Docker@2
-  #         inputs:
-  #           containerRegistry: 'nodejs-microservices-docker-hub'
-  #           repository: 'msinfoorigin/nodejs-microservices-devops'
-  #           command: 'buildAndPush'
-  #           Dockerfile: '**/Dockerfile'
-  #           tags: '$(tag)'
-  #       - task: CopyFiles@2
-  #         inputs:
-  #           SourceFolder: '$(System.DefaultWorkingDirectory)'
-  #           Contents: '**/*.yaml'
-  #           TargetFolder: '$(Build.ArtifactStagingDirectory)'
-  #       - task: PublishBuildArtifacts@1
-  #         inputs:
-  #           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-  #           ArtifactName: 'manifests'
-  #           publishLocation: 'Container'
-  # - stage: Deploy
-  #   displayName: Deploy image
-  #   jobs:
-  #   - job: Deploy
-  #     displayName: Deploy
-  #     pool:
-  #       vmImage: $(vmImageName)
-  #     steps:
-  #     - task: DownloadPipelineArtifact@2
-  #       inputs:
-  #         buildType: 'current'
-  #         artifactName: 'manifests'
-  #         itemPattern: '**/*.yaml'
-  #         targetPath: '$(System.ArtifactsDirectory)'
+            containerRegistry: 'nodejs-microservices-docker-hub'
+            repository: 'msinfoorigin/nodejs-microservices-devops'
+            command: 'buildAndPush'
+            Dockerfile: '**/Dockerfile'
+            tags: '$(tag)'
+        - task: CopyFiles@2
+          inputs:
+            SourceFolder: '$(System.DefaultWorkingDirectory)'
+            Contents: '**/*.yaml'
+            TargetFolder: '$(Build.ArtifactStagingDirectory)'
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: 'manifests'
+            publishLocation: 'Container'
+  - stage: Deploy
+    displayName: Deploy image
+    jobs:
+    - job: Deploy
+      displayName: Deploy
+      pool:
+        vmImage: $(vmImageName)
+      steps:
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          buildType: 'current'
+          artifactName: 'manifests'
+          itemPattern: '**/*.yaml'
+          targetPath: '$(System.ArtifactsDirectory)'
