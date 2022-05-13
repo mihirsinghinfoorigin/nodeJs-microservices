@@ -25,3 +25,7 @@ variable "cluster_name" {
 variable "resource_group" {
   default = "k8stest_rg"
 }
+
+variable "API_KEY_VAULT" {
+  default = "ZIPCODE_API_KEY_VAULT"
+}
