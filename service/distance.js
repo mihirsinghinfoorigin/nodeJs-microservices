@@ -1,7 +1,18 @@
 require('dotenv').config();
+
+const az_identity = require('@azure/identity');
+const az_secret = require('@azure/keyvault-secrets');
+
+const credentials = new az_identity.DefaultAzureCredential();
+const client = new az_secret.SecretClient('https://zipcodeapikeyvault.vault.azure.net/', credentials);
+
 const request = require('request');
 
-const apiKey = process.env.ZIPCODE_API_KEY;
+var apiKey = "";
+client.getSecret(process.env.ZIPCODE_API_KEY).then(res => {
+    apiKey = res.value;
+}
+).catch(err => { console.log(err);});
 
 const zipCodeURL = process.env.ZIPCODE_API_URL;
 
