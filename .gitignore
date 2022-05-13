@@ -2,3 +2,4 @@ node_modules/
 /terraform/.terraform/
 azure_rsa
 azure_rsa.pub
+.env

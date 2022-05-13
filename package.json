@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "@azure/identity": "^2.0.4",
     "@azure/keyvault-secrets": "^4.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
