@@ -10,12 +10,8 @@ resource "azurerm_resource_group" "resource_group" {
   location = var.location
 }
 
-provider "azurerm" {
-  features {}
-}
-
 resource "azurerm_key_vault" "api_key_vault" {
-  name                        = "${var.api_key_vault}-${var.environment}"
+  name                        = "${var.api_key_vault}_${var.environment}"
   location                    = azurerm_resource_group.resource_group.location
   resource_group_name         = azurerm_resource_group.resource_group.name
   enabled_for_disk_encryption = true

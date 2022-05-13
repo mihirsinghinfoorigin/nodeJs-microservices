@@ -27,5 +27,5 @@ variable "resource_group" {
 }
 
 variable "api_key_vault" {
-  default = "zipcode-api-key-vault"
+  default = "zipcode_api_key_vault"
 }
