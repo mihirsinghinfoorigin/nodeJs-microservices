@@ -48,7 +48,7 @@ resource "azurerm_key_vault" "api_key_vault" {
 resource "azurerm_key_vault_secret" "api_key_vault_secret" {
   name         = var.api_key_vault_secret
   value        = "000000"
-  key_vault_id = azurerm_key_vault.example.id
+  key_vault_id = azurerm_key_vault.api_key_vault.id
 }
 
 provider "azurerm" {
