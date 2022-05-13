@@ -15,7 +15,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_key_vault" "API_KEY_VAULT" {
-  name                        = ${var.API_KEY_VAULT}
+  name                        = "${var.API_KEY_VAULT}_${var.environment}"
   location                    = azurerm_resource_group.resource_group.location
   resource_group_name         = azurerm_resource_group.resource_group.name
   enabled_for_disk_encryption = true
