@@ -33,3 +33,7 @@ variable "api_key_vault" {
 variable "api_key_vault_secret" {
   default = "zipcodeApiKeyVaultSecret"
 }
+
+variable "api_key_vault_secret_value" {
+  default = "DemoOnly00vCldZQ8XTBUPeyymKFTZ0aRqySoYITnHm8Dohk37YfTWaUVxDRJ6Nc"
+}
