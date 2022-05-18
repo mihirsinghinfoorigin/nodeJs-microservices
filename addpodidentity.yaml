@@ -1,0 +1,8 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+ name: demoidentity
+spec:
+ type: 0
+ resourceID: /subscriptions/5a9ae617-7b33-4bd4-b9f1-e86451893dc7/resourceGroups/k8stest_rg_dev/providers/Microsoft.ManagedIdentity/userAssignedIdentities/k8stest_msi
+ clientID: a8a4058c-7c0a-4343-be72-f6661d8a123b
