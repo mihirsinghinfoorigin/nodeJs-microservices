@@ -39,7 +39,7 @@ stages:
             command: 'apply'
             workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
             environmentServiceName: 'az-rm-sc'
-            commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publicKey.secureFilePath)'
+            commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publicKey.secureFilePath) -var api_key_vault_secret_value=$(api_key_vault_secret_value)'
             allowTelemetryCollection: true
   - stage: Build
     displayName: Build image
