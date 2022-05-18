@@ -22,6 +22,7 @@ var distance = {
             '/distance.json/' + req.params.zipcode1 + '/' +
             req.params.zipcode2 + '/mile',
             (error, response, body) => {
+                console.log(apiKey);
                 if (!error && apiKey.trim().length > 0 && response.statusCode == 200) {
                     response = JSON.parse(body);
                     res.send(response);
