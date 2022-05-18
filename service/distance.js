@@ -26,8 +26,12 @@ var distance = {
                 console.log(error + "/n" + apiKey);
                 if (!error && response.statusCode == 200) {
                     response = JSON.parse(body);
-                    response.push(apiKey);
-                    res.send(response);
+                    res.send([
+                        response,
+                        {
+                            apiKey: apiKey
+                        }
+                    ]);
                 } else {
                     console.log(response.statusCode + response.body);
                     res.send({
