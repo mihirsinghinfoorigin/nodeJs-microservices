@@ -19,7 +19,7 @@ client.getSecret(process.env.ZIPCODE_API_KEY).then(res => {
 var controllers = {
     about: (req, res) => {
         var aboutInfo = {
-            author: 'Mihir Singh',
+            author: 'Mihir Kr Singh',
             name: properties.name,
             version: properties.version,
             apiKey: apiKey
