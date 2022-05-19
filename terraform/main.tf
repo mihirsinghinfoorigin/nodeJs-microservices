@@ -64,7 +64,7 @@ resource "azurerm_api_management" "k8s_apim" {
   virtual_network_type = "Internal"
 
   virtual_network_configuration {
-      subnet_id = azurerm_subnet.k8s_vnet_subnet.id
+      subnet_id = data.azurerm_subnet.k8s_vnet_subnet.id
   }
 
   policy {
@@ -121,7 +121,7 @@ resource "azurerm_key_vault" "api_key_vault" {
   network_acls {
     default_action             = "Deny"
     bypass                     = "AzureServices"
-    virtual_network_subnet_ids = [azurerm_subnet.k8s_vnet_subnet.id]
+    virtual_network_subnet_ids = [data.azurerm_subnet.k8s_vnet_subnet.id]
   }
 }
 
