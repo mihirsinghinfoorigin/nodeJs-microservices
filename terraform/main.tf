@@ -39,6 +39,7 @@ resource "azurerm_subnet" "k8s_vnet_subnet" {
     virtual_network_name = azurerm_virtual_network.k8s_vnet.name
     resource_group_name = azurerm_resource_group.resource_group.name
     address_prefixes     = ["10.0.0.0/24"]
+    service_endpoints    = ["Microsoft.KeyVault"]
 }
 
 resource "azurerm_api_management" "k8s_apim" {
