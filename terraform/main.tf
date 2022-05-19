@@ -16,6 +16,63 @@ resource "azurerm_resource_group" "resource_group" {
   location = var.location
 }
 
+resource "azurerm_network_security_group" "vnet_security_group" {
+  name                = "k8stest_security_group"
+  location            = azurerm_resource_group.resource_group.location
+  resource_group_name = azurerm_resource_group.resource_group.name
+}
+
+resource "azurerm_virtual_network" "k8s_vnet" {
+  name                = "k8s_vnet"
+  location            = azurerm_resource_group.resource_group.location
+  resource_group_name = azurerm_resource_group.resource_group.name
+  address_space       = ["10.0.0.0/16"]
+  dns_servers         = ["10.0.0.4", "10.0.0.5"]
+
+  subnet {
+    name           = "subnet1"
+    address_prefix = "10.0.1.0/24"
+  }
+
+  subnet {
+    name           = "subnet2"
+    address_prefix = "10.0.2.0/24"
+    security_group = azurerm_network_security_group.vnet_security_group.id
+  }
+
+  tags = {
+    environment = var.environment
+  }
+}
+
+resource "azurerm_api_management" "k8s_apim" {
+  name                = "k8s_apim"
+  location            = azurerm_resource_group.resource_group.location
+  resource_group_name = azurerm_resource_group.resource_group.name
+  publisher_name      = "InfoOrigin"
+  publisher_email     = "mihir.singh@infoorigin.com"
+
+  sku_name = "Developer_1"
+
+  virtual_network_type = "Internal"
+
+  virtual_network_configuration {
+      subnet_id = azurerm_virtual_network.k8s_vnet.subnet.subnet2.id
+  }
+
+  policy {
+    xml_content = <<XML
+    <policies>
+      <inbound />
+      <backend />
+      <outbound />
+      <on-error />
+    </policies>
+XML
+
+  }
+}
+
 resource "azurerm_key_vault" "api_key_vault" {
   name                        = var.api_key_vault
   location                    = azurerm_resource_group.resource_group.location
@@ -52,6 +109,12 @@ resource "azurerm_key_vault" "api_key_vault" {
     storage_permissions = [
       "Get",
     ]
+  }
+
+  network_acls {
+    default_action             = "Deny"
+    bypass                     = "AzureServices"
+    virtual_network_subnet_ids = [azurerm_virtual_network.k8s_vnet.subnet.subnet1.id, azurerm_virtual_network.k8s_vnet.subnet.subnet2.id]
   }
 }
 
