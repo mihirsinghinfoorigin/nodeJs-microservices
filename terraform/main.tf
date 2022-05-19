@@ -29,23 +29,12 @@ resource "azurerm_virtual_network" "k8s_vnet" {
   address_space       = ["10.0.0.0/16"]
   dns_servers         = ["10.0.0.4", "10.0.0.5"]
 
-  subnet {
-    name           = "subnet1"
-    address_prefix = "10.0.1.0/24"
-  }
-
-  subnet {
-    name           = "subnet2"
-    address_prefix = "10.0.2.0/24"
-    security_group = azurerm_network_security_group.vnet_security_group.id
-  }
-
   tags = {
     environment = var.environment
   }
 }
 
-data "azurerm_subnet" "k8s_vnet_subnet" {
+data_vnet "azurerm_subnet" "k8s_vnet_subnet" {
     name             = "k8s_vnet_subnet"
     virtual_network_name = azurerm_virtual_network.k8s_vnet.name
     resource_group_name = azurerm_resource_group.resource_group.name
@@ -63,7 +52,7 @@ resource "azurerm_api_management" "k8s_apim" {
   virtual_network_type = "Internal"
 
   virtual_network_configuration {
-      subnet_id = data.azurerm_subnet.k8s_vnet_subnet.id
+      subnet_id = data_vnet.azurerm_subnet.k8s_vnet_subnet.id
   }
 
   policy {
@@ -120,7 +109,7 @@ resource "azurerm_key_vault" "api_key_vault" {
   network_acls {
     default_action             = "Deny"
     bypass                     = "AzureServices"
-    virtual_network_subnet_ids = [data.azurerm_subnet.k8s_vnet_subnet.id]
+    virtual_network_subnet_ids = [data_vnet.azurerm_subnet.k8s_vnet_subnet.id]
   }
 }
 
