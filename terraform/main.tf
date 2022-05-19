@@ -43,7 +43,7 @@ resource "azurerm_subnet" "k8s_vnet_subnet" {
 }
 
 resource "azurerm_api_management" "k8s_apim" {
-  name                = "k8s-apim"
+  name                = "k8s-apim-ms007"
   location            = azurerm_resource_group.resource_group.location
   resource_group_name = azurerm_resource_group.resource_group.name
   publisher_name      = "InfoOrigin"
