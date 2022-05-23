@@ -54,7 +54,7 @@ resource "azurerm_subnet" "k8s-nodepool" {
   name                 = "default"
   virtual_network_name = azurerm_virtual_network.k8s_vnet.name
   resource_group_name  = azurerm_resource_group.resource_group.name
-  address_prefixes     = ["10.240.0.0/24"]
+  address_prefixes     = ["10.0.1.0/24"]
 }
 
 resource "azurerm_subnet" "k8s_vnet_subnet" {
@@ -132,6 +132,14 @@ resource "azurerm_kubernetes_cluster" "terraform-k8s" {
     ssh_key {
       key_data = file(var.ssh_public_key)
     }
+  }
+  
+  network_profile {
+    network_plugin = "azure"
+    network_policy = "azure"
+    service_cidr = "10.0.4.0/24"
+    dns_service_ip = "10.0.4.10"
+    docker_bridge_cidr = "172.17.0.1/16"
   }
 
   default_node_pool {
