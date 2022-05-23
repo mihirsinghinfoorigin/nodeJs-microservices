@@ -138,6 +138,7 @@ resource "azurerm_kubernetes_cluster" "terraform-k8s" {
     name       = "agentpool"
     node_count = var.node_count
     vm_size    = "standard_b2ms"
+    vnet_subnet_id = azurerm_subnet.k8s-nodepool.id
   }
 
   service_principal {
