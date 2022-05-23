@@ -134,19 +134,19 @@ resource "azurerm_kubernetes_cluster" "terraform-k8s" {
     }
   }
   
-  network_profile {
-    network_plugin = "azure"
-    network_policy = "azure"
-    service_cidr = "10.0.4.0/24"
-    #dns_service_ip = "10.0.4.10"
-    #docker_bridge_cidr = "172.17.0.1/16"
-  }
+  #network_profile {
+  #  network_plugin = "azure"
+  #  network_policy = "azure"
+  #  service_cidr = "10.0.4.0/24"
+  #  dns_service_ip = "10.0.4.10"
+  #  docker_bridge_cidr = "172.17.0.1/16"
+  #}
 
   default_node_pool {
     name       = "agentpool"
     node_count = var.node_count
     vm_size    = "standard_b2ms"
-    vnet_subnet_id = azurerm_subnet.k8s-nodepool.id
+  #  vnet_subnet_id = azurerm_subnet.k8s-nodepool.id
   }
 
   service_principal {
