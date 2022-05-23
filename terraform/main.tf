@@ -65,22 +65,6 @@ resource "azurerm_subnet" "k8s_vnet_subnet" {
     service_endpoints    = ["Microsoft.KeyVault","Microsoft.Sql"]
 }
 
-resource "azurerm_api_management" "k8s_apim" {
-  name                = "k8s-apim-ms09"
-  location            = azurerm_resource_group.resource_group.location
-  resource_group_name = azurerm_resource_group.resource_group.name
-  publisher_name      = "InfoOrigin"
-  publisher_email     = "mihir.singh@infoorigin.com"
-
-  sku_name = "Developer_1"
-
-  virtual_network_type = "Internal"
-
-  virtual_network_configuration {
-      subnet_id = azurerm_subnet.k8s_vnet_subnet.id
-  }
-}
-
 resource "azurerm_key_vault" "api_key_vault" {
   name                        = var.api_key_vault
   location                    = azurerm_resource_group.resource_group.location
@@ -119,11 +103,11 @@ resource "azurerm_key_vault" "api_key_vault" {
     ]
   }
 
-  network_acls {
-    default_action             = "Deny"
-    bypass                     = "AzureServices"
-    virtual_network_subnet_ids = [azurerm_subnet.k8s_vnet_subnet.id]
-  }
+  #network_acls {
+  #  default_action             = "Deny"
+  #  bypass                     = "AzureServices"
+  #  virtual_network_subnet_ids = [azurerm_subnet.k8s_vnet_subnet.id]
+  #}
 }
 
 resource "azurerm_key_vault_secret" "api_key_vault_secret" {
